@@ -3,7 +3,7 @@ import { User } from '..';
 
 export const users = queryField('users', {
 	type: nullable(list(nonNull(User))),
-	resolve: async (root, args, ctx) => {
+	resolve: async (_root, _args, ctx) => {
 		return ctx.prisma.users.findMany();
 	},
 });
