@@ -9,7 +9,7 @@
 		"generate": "npm -s run generate:nexus && npm -s run generate:prisma",
 		"generate:nexus": "ts-node --transpile-only src/schema",
 		"generate:prisma": "prisma generate",
-		"start": "node dist/index.js",
+		"start": "node dist/index.js --omit=dev",
 		"build": "npx tsc"
 	},
 	"keywords": [],
@@ -26,7 +26,7 @@
 		"apollo-server-express": "^3.10.2",
 		"dotenv": "^16.0.2",
 		"express": "^4.18.1",
-		"graphql": "^16.6.0",
+		"graphql": "^15.8.0",
 		"graphql-middleware": "^6.1.32",
 		"nexus": "^1.3.0",
 		"ts-node": "^10.9.1"

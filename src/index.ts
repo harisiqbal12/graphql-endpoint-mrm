@@ -1,37 +1,43 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from "apollo-server-express";
 import {
-	ApolloServerPluginDrainHttpServer,
-	ApolloServerPluginLandingPageLocalDefault,
-} from 'apollo-server-core';
-import express from 'express';
-import http from 'http';
-import { schema } from './schema';
-import { createContext } from './context';
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageLocalDefault,
+} from "apollo-server-core";
+import express from "express";
+import http from "http";
+import { schema } from "./schema";
+import { createContext } from "./context";
 
 async function startApolloServer() {
-	const app = express();
-	const httpServer = http.createServer(app);
-	const graphqlServer = new ApolloServer({
-		schema: schema,
-		plugins: [
-			ApolloServerPluginDrainHttpServer({ httpServer }),
-			ApolloServerPluginLandingPageLocalDefault(),
-		],
-		context: createContext,
-	});
+  const app = express();
+  const httpServer = http.createServer(app);
+  const graphqlServer = new ApolloServer({
+    schema: schema,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageLocalDefault(),
+    ],
+    context: createContext,
+  });
 
-	await graphqlServer.start();
+  app.get("/", (_req, res) => {
+    res.status(200).send('<h2>MRM MANAGEMENT BACKEND"');
+  });
 
-	graphqlServer.applyMiddleware({ app });
+  await graphqlServer.start();
 
-	await new Promise<void>(resolve => {
-		httpServer.listen({ port: 4000 });
-		resolve();
-	});
+  graphqlServer.applyMiddleware({ app });
 
-	console.log(
-		`Server running at http://localhost:4000${graphqlServer.graphqlPath}"`
-	);
+  const PORT = process.env.PORT || 4000;
+
+  await new Promise<void>((resolve) => {
+    httpServer.listen({ port: PORT });
+    resolve();
+  });
+
+  console.log(
+    `Server running at http://localhost:4000${graphqlServer.graphqlPath}"`
+  );
 }
 
 startApolloServer();

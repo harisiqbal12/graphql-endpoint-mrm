@@ -20,10 +20,14 @@ async function startApolloServer() {
         ],
         context: context_1.createContext,
     });
+    app.get("/", (_req, res) => {
+        res.status(200).send('<h2>MRM MANAGEMENT BACKEND"');
+    });
     await graphqlServer.start();
     graphqlServer.applyMiddleware({ app });
-    await new Promise(resolve => {
-        httpServer.listen({ port: 4000 });
+    const PORT = process.env.PORT || 4000;
+    await new Promise((resolve) => {
+        httpServer.listen({ port: PORT });
         resolve();
     });
     console.log(`Server running at http://localhost:4000${graphqlServer.graphqlPath}"`);
