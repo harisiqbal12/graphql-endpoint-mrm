@@ -2,24 +2,64 @@
 ### Do not make changes to this file directly
 
 
+input AcknowledgePostInput {
+  post_id: String!
+  user_id: String!
+}
+
+type Chat {
+  Acknowledgements: [User!]
+  Sender: User
+  createdAt: String!
+  greetings: String!
+  id: String!
+  message: String!
+  regards: String!
+  sender_id: String!
+  type: ChatTypeEnum!
+}
+
+enum ChatTypeEnum {
+  HOLIDAY
+  NOTIFICATION
+}
+
+input CreateChatInput {
+  greetings: String!
+  message: String!
+  regards: String!
+  senderId: String!
+}
+
 input CreateUserInput {
   age: Int!
+  email: String!
   fullname: String!
   image: String
   role: UserRoleEnum!
 }
 
 type Mutation {
+  acknowledgePost(input: AcknowledgePostInput!): Chat!
+  createPost(input: CreateChatInput!): Chat
   createUser(input: CreateUserInput!): User
 }
 
 type Query {
+  allPostsAsc: [Chat!]
+  posts: [Chat!]
+  uniqueUser(email: String!): User
   users: [User!]
 }
 
 type User {
+  age: Int!
+  createdAt: String!
+  email: String!
   fullname: String!
   id: String!
+  image: String
+  role: UserRoleEnum!
 }
 
 enum UserRoleEnum {

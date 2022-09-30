@@ -28,6 +28,5 @@
 		/* Completeness */
 		"skipLibCheck": true
 	},
-
 	"exclude": ["node_modules"]
 }

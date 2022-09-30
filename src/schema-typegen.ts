@@ -14,8 +14,19 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  AcknowledgePostInput: { // input type
+    post_id: string; // String!
+    user_id: string; // String!
+  }
+  CreateChatInput: { // input type
+    greetings: string; // String!
+    message: string; // String!
+    regards: string; // String!
+    senderId: string; // String!
+  }
   CreateUserInput: { // input type
     age: number; // Int!
+    email: string; // String!
     fullname: string; // String!
     image?: string | null; // String
     role: NexusGenEnums['UserRoleEnum']; // UserRoleEnum!
@@ -23,6 +34,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  ChatTypeEnum: "HOLIDAY" | "NOTIFICATION"
   UserRoleEnum: "EMPLOYEE" | "HR" | "OWNER"
 }
 
@@ -35,11 +47,25 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Chat: { // root type
+    createdAt: string; // String!
+    greetings: string; // String!
+    id: string; // String!
+    message: string; // String!
+    regards: string; // String!
+    sender_id: string; // String!
+    type: NexusGenEnums['ChatTypeEnum']; // ChatTypeEnum!
+  }
   Mutation: {};
   Query: {};
   User: { // root type
+    age: number; // Int!
+    createdAt: string; // String!
+    email: string; // String!
     fullname: string; // String!
     id: string; // String!
+    image?: string | null; // String
+    role: NexusGenEnums['UserRoleEnum']; // UserRoleEnum!
   }
 }
 
@@ -54,35 +80,88 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Chat: { // field return type
+    Acknowledgements: NexusGenRootTypes['User'][] | null; // [User!]
+    Sender: NexusGenRootTypes['User'] | null; // User
+    createdAt: string; // String!
+    greetings: string; // String!
+    id: string; // String!
+    message: string; // String!
+    regards: string; // String!
+    sender_id: string; // String!
+    type: NexusGenEnums['ChatTypeEnum']; // ChatTypeEnum!
+  }
   Mutation: { // field return type
+    acknowledgePost: NexusGenRootTypes['Chat']; // Chat!
+    createPost: NexusGenRootTypes['Chat'] | null; // Chat
     createUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
+    allPostsAsc: NexusGenRootTypes['Chat'][] | null; // [Chat!]
+    posts: NexusGenRootTypes['Chat'][] | null; // [Chat!]
+    uniqueUser: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   User: { // field return type
+    age: number; // Int!
+    createdAt: string; // String!
+    email: string; // String!
     fullname: string; // String!
     id: string; // String!
+    image: string | null; // String
+    role: NexusGenEnums['UserRoleEnum']; // UserRoleEnum!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Chat: { // field return type name
+    Acknowledgements: 'User'
+    Sender: 'User'
+    createdAt: 'String'
+    greetings: 'String'
+    id: 'String'
+    message: 'String'
+    regards: 'String'
+    sender_id: 'String'
+    type: 'ChatTypeEnum'
+  }
   Mutation: { // field return type name
+    acknowledgePost: 'Chat'
+    createPost: 'Chat'
     createUser: 'User'
   }
   Query: { // field return type name
+    allPostsAsc: 'Chat'
+    posts: 'Chat'
+    uniqueUser: 'User'
     users: 'User'
   }
   User: { // field return type name
+    age: 'Int'
+    createdAt: 'String'
+    email: 'String'
     fullname: 'String'
     id: 'String'
+    image: 'String'
+    role: 'UserRoleEnum'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    acknowledgePost: { // args
+      input: NexusGenInputs['AcknowledgePostInput']; // AcknowledgePostInput!
+    }
+    createPost: { // args
+      input: NexusGenInputs['CreateChatInput']; // CreateChatInput!
+    }
     createUser: { // args
       input: NexusGenInputs['CreateUserInput']; // CreateUserInput!
+    }
+  }
+  Query: {
+    uniqueUser: { // args
+      email: string; // String!
     }
   }
 }

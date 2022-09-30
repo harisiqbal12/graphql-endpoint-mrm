@@ -11,17 +11,40 @@ datasource db {
 }
 
 model Users {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   fullname String
   age      Int
   role     Role
   image    String?
+  email    String  @unique
 
   createdAt DateTime @default(now())
+
+  Chats            Posts[] @relation("senders")
+  Acknowledgements Posts[] @relation("acknowledgments")
+}
+
+model Posts {
+  id        String  @id @default(uuid())
+  message   String
+  greetings String
+  regards   String
+  type      Holiday @default(NOTIFICATION)
+
+  Sender    Users?  @relation("senders", fields: [sender_id], references: [id])
+  sender_id String?
+
+  Acknowledgements Users[]  @relation("acknowledgments")
+  createdAt        DateTime @default(now())
 }
 
 enum Role {
   HR
   OWNER
   EMPLOYEE
+}
+
+enum Holiday {
+  HOLIDAY
+  NOTIFICATION
 }

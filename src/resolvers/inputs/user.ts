@@ -1,20 +1,21 @@
-import { inputObjectType, enumType } from 'nexus';
+import { inputObjectType, enumType } from "nexus";
 
 export const CreateUserInput = inputObjectType({
-	name: 'CreateUserInput',
-	definition(t) {
-		t.nonNull.string('fullname');
-		t.nonNull.int('age');
-		t.nonNull.field('role', { type: UserRoleEnum });
-		t.nullable.string('image');
-	},
+  name: "CreateUserInput",
+  definition(t) {
+    t.nonNull.string("fullname");
+    t.nonNull.int("age");
+    t.nonNull.field("role", { type: UserRoleEnum });
+    t.nullable.string("image");
+    t.nonNull.string("email");
+  },
 });
 
 export const UserRoleEnum = enumType({
-	name: 'UserRoleEnum',
-	members: {
-		HR: 'HR',
-		OWNER: 'OWNER',
-		EMPLOYEE: 'EMPLOYEE',
-	},
+  name: "UserRoleEnum",
+  members: {
+    HR: "HR",
+    OWNER: "OWNER",
+    EMPLOYEE: "EMPLOYEE",
+  },
 });
