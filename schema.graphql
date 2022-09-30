@@ -29,6 +29,7 @@ input CreateChatInput {
   message: String!
   regards: String!
   senderId: String!
+  type: ChatTypeEnum!
 }
 
 input CreateUserInput {
@@ -47,6 +48,7 @@ type Mutation {
 
 type Query {
   allPostsAsc: [Chat!]
+  postFilters(chatType: ChatTypeEnum!): [Chat!]
   posts: [Chat!]
   uniqueUser(email: String!): User
   users: [User!]

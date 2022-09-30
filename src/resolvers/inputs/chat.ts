@@ -7,6 +7,7 @@ export const CreateChatInput = inputObjectType({
     t.nonNull.string("senderId");
     t.nonNull.string("greetings");
     t.nonNull.string("regards");
+    t.nonNull.field("type", { type: ChatTypeEnum });
   },
 });
 

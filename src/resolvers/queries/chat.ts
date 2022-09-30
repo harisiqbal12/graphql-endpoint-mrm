@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { list, nonNull, nullable, queryField } from "nexus";
 import { Chat } from "..";
+import { ChatTypeEnum } from "../inputs/index";
 
 export const chats = queryField("posts", {
   type: nullable(list(nonNull(Chat))),
@@ -28,4 +29,16 @@ export const allChats = queryField("allPostsAsc", {
   },
 });
 
-
+export const chatFilters = queryField("postFilters", {
+  type: nullable(list(nonNull(Chat))),
+  args: {
+    chatType: nonNull(ChatTypeEnum),
+  },
+  resolve: async (_parent, args, ctx) => {
+    return await ctx.prisma.posts.findMany({
+      where: {
+        type: args.chatType,
+      },
+    });
+  },
+});

@@ -23,6 +23,7 @@ export interface NexusGenInputs {
     message: string; // String!
     regards: string; // String!
     senderId: string; // String!
+    type: NexusGenEnums['ChatTypeEnum']; // ChatTypeEnum!
   }
   CreateUserInput: { // input type
     age: number; // Int!
@@ -98,6 +99,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     allPostsAsc: NexusGenRootTypes['Chat'][] | null; // [Chat!]
+    postFilters: NexusGenRootTypes['Chat'][] | null; // [Chat!]
     posts: NexusGenRootTypes['Chat'][] | null; // [Chat!]
     uniqueUser: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
@@ -132,6 +134,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     allPostsAsc: 'Chat'
+    postFilters: 'Chat'
     posts: 'Chat'
     uniqueUser: 'User'
     users: 'User'
@@ -160,6 +163,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    postFilters: { // args
+      chatType: NexusGenEnums['ChatTypeEnum']; // ChatTypeEnum!
+    }
     uniqueUser: { // args
       email: string; // String!
     }

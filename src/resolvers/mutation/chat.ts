@@ -16,6 +16,7 @@ export const createChat = mutationField("createPost", {
         sender_id: args.input.senderId,
         greetings: args.input.greetings,
         regards: args.input.regards,
+        type: args.input.type,
       },
     });
   },
